@@ -1,0 +1,3 @@
+- ui
+  - any panels
+- view manager
