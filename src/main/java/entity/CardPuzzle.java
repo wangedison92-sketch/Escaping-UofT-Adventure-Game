@@ -8,13 +8,13 @@ import entity.Card;
  */
 public class CardPuzzle extends Puzzle {
     private final List<Card> cards;
-    private String sampleSolution;
+    private final String sampleSolution;
     public static String DESCRIPTION =
             "Welcome to the Math24 Card Puzzle! " +
                     "Do you see the 4 random cards presented to you? \n" +
                     "Try to connect them using \"+\", \"-\", \"*\", \"/\", and parentheses " +
                     "to get an expression that evaluates to 24!";
-    private String hint;
+    private final String hint;
     private static final String NAME = "CardPuzzle";
 
     /**
@@ -28,7 +28,7 @@ public class CardPuzzle extends Puzzle {
         this.cards = cards;
         this.sampleSolution = this.solve();
         String inner = this.extractInner();
-        this.hint = new String("Maybe try " + inner + " first.");
+        this.hint = "Maybe try " + inner + " first.";
     }
 
     private String extractInner() {
@@ -54,8 +54,7 @@ public class CardPuzzle extends Puzzle {
 
     @Override
     public String solve() {
-        String result = SolutionGenerator.find24Solutions(this.cards).get(0);
-        return result;
+        return SolutionGenerator.find24Solutions(this.cards).get(0);
     }
 
     @Override
