@@ -2,7 +2,6 @@ package interface_adapter.card_game_hints;
 
 import use_case.card_game_hints.CardGameHintsInputDataObject;
 import use_case.card_game_hints.CardGameHintsInteractor;
-import use_case.play_card_game.PlayCardGameInputBoundary;
 
 /**
  * Controller for the Give Hints Use Case.

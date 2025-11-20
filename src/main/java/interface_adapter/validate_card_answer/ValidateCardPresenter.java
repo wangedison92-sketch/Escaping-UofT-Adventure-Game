@@ -1,5 +1,7 @@
 package interface_adapter.validate_card_answer;
 
+import interface_adapter.play_card_game.CardGameState;
+import interface_adapter.play_card_game.CardGameViewModel;
 import use_case.validateCardAnswer.ValidateCardAnswerInputData;
 import use_case.validateCardAnswer.ValidateCardAnswerOutputBoundary;
 import use_case.validateCardAnswer.ValidateCardAnswerOutputData;
@@ -9,31 +11,31 @@ import interface_adapter.ViewManagerModel;
  * The Presenter for the Validate Card Answer Use Case.
  */
 public class ValidateCardPresenter implements ValidateCardAnswerOutputBoundary {
-    private final ValidateCardViewModel validateCardViewModel;
+    private final CardGameViewModel cardGameViewModel;
 
-    public ValidateCardPresenter(ValidateCardViewModel validateCardViewModel) {
-        this.validateCardViewModel = validateCardViewModel;
+    public ValidateCardPresenter(CardGameViewModel cardGameViewModel) {
+        this.cardGameViewModel = cardGameViewModel;
     }
 
     @Override
     public void prepareSuccessView(ValidateCardAnswerOutputData outputData) {
-        String message = outputData.getMessage();
-        ValidateCardState current = this.validateCardViewModel.getState();
-        ValidateCardState newState = new ValidateCardState(current);
-        newState.setMessage(message);
+        String feedback = outputData.getMessage();
+        CardGameState current = this.cardGameViewModel.getState();
+        CardGameState newState = new CardGameState(current);
+        newState.setAnswerFeedback(feedback);
         newState.setSolved();
 
-        this.validateCardViewModel.setState(newState);
-        this.validateCardViewModel.firePropertyChange();
+        this.cardGameViewModel.setState(newState);
+        this.cardGameViewModel.firePropertyChange();
     }
 
     @Override
     public void prepareFailView(ValidateCardAnswerOutputData outputData) {
         String message = outputData.getMessage();
-        ValidateCardState state = this.validateCardViewModel.getState();
-        ValidateCardState newState = new ValidateCardState(state);
-        newState.setMessage(message);
-        this.validateCardViewModel.setState(newState);
-        this.validateCardViewModel.firePropertyChange();
+        CardGameState state = this.cardGameViewModel.getState();
+        CardGameState newState = new CardGameState(state);
+        newState.setAnswerFeedback(message);
+        this.cardGameViewModel.setState(newState);
+        this.cardGameViewModel.firePropertyChange();
     }
 }

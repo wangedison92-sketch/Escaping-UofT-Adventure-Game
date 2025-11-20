@@ -7,7 +7,7 @@ import interface_adapter.ViewModel;
 public class CardGameViewModel extends ViewModel<CardGameState> {
 
     public CardGameViewModel() {
-        super("Play card games");
+        super("Card Game");
         setState(new CardGameState());
     }
 }
