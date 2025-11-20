@@ -23,14 +23,12 @@ public class AppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
-    // TODO: Implement add<item>View()
-    public AppBuilder add___View() {
-        /* Structure:
-        <item>ViewModel i = new <item>ViewModel(...);
-        <item>View j = new <item>View(...);
-        cardPanel.add(j, j.getViewName());
+    public AppBuilder addView(JPanel view, String viewName) {
+        cardPanel.add(view, viewName);
+        if (initialViewName == null) {
+            initialViewName = viewName;
+        }
         return this;
-         */
     }
 
     // TODO: Implement add<item>UseCase()
@@ -45,16 +43,15 @@ public class AppBuilder {
     }
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        application.add(cardPanel);
-
-        viewManagerModel.setState(navigationView.getViewName());
+        JFrame window = new JFrame("UofT Adventure Game");
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        window.setSize(900, 650);
+        window.setResizable(false);
+        window.add(cardPanel);
+        viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
+        window.setVisible(true);
 
-        return application;
+        return window;
     }
-
-
 }
