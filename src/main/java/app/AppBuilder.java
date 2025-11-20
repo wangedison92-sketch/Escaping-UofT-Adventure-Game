@@ -50,7 +50,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(navigationView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
