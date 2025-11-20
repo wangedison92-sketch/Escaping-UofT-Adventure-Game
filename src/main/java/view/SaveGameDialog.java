@@ -13,6 +13,9 @@ public class SaveGameDialog {
     private final JDialog saveGameDialog = new JDialog();
 
     public SaveGameDialog() {
+        SaveGameDialog saveDialog = new SaveGameDialog();
+        saveDialog.setSaveGameController(saveProgressController);
+
         final JLabel title = new JLabel("Save game before quitting?");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -50,5 +53,6 @@ public class SaveGameDialog {
 
     public void setSaveGameController(SaveProgressController saveProgressController) {
         this.saveProgressController = saveProgressController;
+        // this will be updated in case the saveProgressController needs more stuff to function.
     }
 }

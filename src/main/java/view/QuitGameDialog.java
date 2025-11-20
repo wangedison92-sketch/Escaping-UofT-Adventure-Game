@@ -11,6 +11,9 @@ public class QuitGameDialog {
     private final JDialog quitGameDialog = new JDialog();
 
     public QuitGameDialog() {
+        QuitGameDialog quitDialog = new QuitGameDialog();
+        quitDialog.setQuitGameController(quitGameController);
+
         final JLabel title = new JLabel("Quit Game?");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -20,7 +23,7 @@ public class QuitGameDialog {
 
         quitGame.addActionListener(evt -> {
                 quitGameDialog.dispose();
-                quitGameController.execute(); // show Save Game dialog
+                quitGameController.showSave(); // show Save Game dialog
             }
         );
 
@@ -46,7 +49,7 @@ public class QuitGameDialog {
         this.quitGameController = quitGameController;
 
         this.quitGameController.setShowSaveDialog(() -> {
-            // This code runs when the user clicks Quit → controller.execute()
+            // This code runs when the user clicks Quit → controller.showSave()
             SaveGameDialog dialog = new SaveGameDialog();
             dialog.show();
         });

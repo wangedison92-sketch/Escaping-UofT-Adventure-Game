@@ -1,4 +1,4 @@
-package main.java.app;
+package app;
 
 import main.java.interface_adapter.ViewManagerModel;
 import main.java.view.ViewManager;
