@@ -47,13 +47,12 @@ public class AppBuilder {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(900, 650);
         window.setResizable(false);
-
         window.add(cardPanel);
 
         viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
-
         window.setVisible(true);
+
         return window;
     }
 }
