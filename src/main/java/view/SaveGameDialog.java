@@ -7,11 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SaveGameDialog {
-    private final String viewName = "quit";
+    private final String viewName = "save game";
     private SaveProgressController saveProgressController;
-
-    private final JButton quitAndSave;
-    private final JButton quitDontSave;
 
     private final JDialog saveGameDialog = new JDialog();
 
@@ -20,26 +17,27 @@ public class SaveGameDialog {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel buttons = new JPanel();
-        quitAndSave = new JButton("Save and quit");
-        quitDontSave = new JButton("Quit without saving");
+        JButton quitAndSave = new JButton("Save and quit");
+        JButton quitDontSave = new JButton("Quit without saving");
 
-        quitAndSave.addActionListener(
-                evt -> {
-                    saveProgressController.execute();
-                    System.exit(0);
-                }
+        quitAndSave.addActionListener(evt -> {
+                saveProgressController.execute();
+                closeGame();
+            }
         );
 
-        quitDontSave.addActionListener(
-                evt -> {
-                    System.exit(0);
-                }
+        quitDontSave.addActionListener(evt -> closeGame()
         );
 
         buttons.add(quitAndSave);
         buttons.add(quitDontSave);
         saveGameDialog.add(title, BorderLayout.NORTH);
         saveGameDialog.add(buttons, BorderLayout.SOUTH);
+    }
+
+    private void closeGame() {
+        saveGameDialog.dispose();
+        System.exit(0);
     }
 
     public void show() {

@@ -3,14 +3,10 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import interface_adapter.quit_game.QuitGameController;
-//import main.java.interface_adapter.quit_game.QuitGamePresenter;
 
 public class QuitGameDialog {
     private final String viewName = "quit";
     private QuitGameController quitGameController;
-
-    private final JButton quitGame;
-    private final JButton cancel;
 
     private final JDialog quitGameDialog = new JDialog();
 
@@ -19,21 +15,16 @@ public class QuitGameDialog {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel buttons = new JPanel();
-        quitGame = new JButton("Quit");
-        cancel = new JButton("Cancel");
+        JButton quitGame = new JButton("Quit");
+        JButton cancel = new JButton("Cancel");
 
-        quitGame.addActionListener(
-                evt -> {
-                    closeDialog();
-                    quitGameController.execute(); // show Save Game dialog
-                }
+        quitGame.addActionListener(evt -> {
+                quitGameDialog.dispose();
+                quitGameController.execute(); // show Save Game dialog
+            }
         );
 
-        cancel.addActionListener(
-                evt -> {
-                    closeDialog(); // for now. not sure if this actually works imo
-//                        dispose();
-                }
+        cancel.addActionListener(evt -> quitGameDialog.dispose()
         );
 
         buttons.add(quitGame);
@@ -45,15 +36,6 @@ public class QuitGameDialog {
     public void show() {
         quitGameDialog.setVisible(true);
     }
-
-    public void closeDialog() {
-        quitGameDialog.dispose();
-//        quitGameDialog.setVisible(false);
-    }
-
-//    public void actionPerformed(ActionEvent e) {
-//        dispose();
-//    }
 
     public String getViewName() {
         return viewName;
