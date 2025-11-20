@@ -6,7 +6,7 @@ public class ClearHistoryController {
     private Runnable showConfirmDialog;
     private ClearHistoryInputBoundary interactor;
 
-    public void ClearHistoryController(ClearHistoryInputBoundary interactor) {
+    public ClearHistoryController(ClearHistoryInputBoundary interactor) {
         this.interactor = interactor; // init in app builder?
     }
 

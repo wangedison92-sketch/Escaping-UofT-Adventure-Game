@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 
 // TODO: Add imports
+import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.clear_history.ClearHistoryPresenter;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -56,7 +58,7 @@ public class AppBuilder {
     public AppBuilder addClearHistoryUseCase() {
         final ClearHistoryOutputBoundary outputBoundary = new ClearHistoryPresenter(NavigateViewModel);
         final ClearHistoryInputBoundary inputBoundary = new ClearHistoryInteractor(outputBoundary);
-        ClearHistoryController controller = new ClearHistoryController();
+        ClearHistoryController controller = new ClearHistoryController(inputBoundary);
         NavigateView.setClearHistoryController(controller);
         return this;
     }
