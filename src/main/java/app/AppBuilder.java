@@ -1,12 +1,21 @@
 package app;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.clear_history.ClearHistoryPresenter;
+import interface_adapter.navigate.NavigateViewModel;
+import use_case.clear_history.ClearHistoryInputBoundary;
+import use_case.clear_history.ClearHistoryInteractor;
+import use_case.clear_history.ClearHistoryOutputBoundary;
+import view.NavigateView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 
 // TODO: Add imports
+import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.clear_history.ClearHistoryPresenter;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -18,6 +27,8 @@ public class AppBuilder {
     // TODO: Implement DAO
 
     // TODO: Implement Views and View Models
+    private NavigateViewModel NavigateViewModel;
+    private NavigateView NavigateView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -40,6 +51,14 @@ public class AppBuilder {
         <item>View.setController(k) // (private variable in AppBuilder)
         return this;
          */
+    }
+
+    public AppBuilder addClearHistoryUseCase() {
+        final ClearHistoryOutputBoundary outputBoundary = new ClearHistoryPresenter(NavigateViewModel);
+        final ClearHistoryInputBoundary inputBoundary = new ClearHistoryInteractor(outputBoundary);
+        ClearHistoryController controller = new ClearHistoryController(inputBoundary);
+        NavigateView.setClearHistoryController(controller);
+        return this;
     }
 
     public JFrame build() {
