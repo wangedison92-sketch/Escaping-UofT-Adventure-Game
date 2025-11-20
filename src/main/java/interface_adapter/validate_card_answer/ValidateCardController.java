@@ -1,28 +1,22 @@
 package interface_adapter.validate_card_answer;
-import entity.Card;
-import entity.CardPuzzle;
-import use_case.validateCardAnswer.ValidateCardAnswerInputData;
-import use_case.validateCardAnswer.ValidateCardAnswerInputBoundary;
 
-import java.util.List;
-import entity.Player;
+import use_case.validateCardAnswer.ValidateCardAnswerInteractor;
+import use_case.validateCardAnswer.ValidateCardAnswerInputData;
 
 /**
- * Controller for the Play Card Game Use Case.
+ * Controller for the Validate Card Answer Use Case.
  */
 public class ValidateCardController {
-    private final ValidateCardAnswerInputBoundary validateInteractor;
+    private final ValidateCardAnswerInteractor interactor;
 
-    public ValidateCardController(ValidateCardAnswerInputBoundary validateInteractor) {
-        this.validateInteractor = validateInteractor;
+    public ValidateCardController(ValidateCardAnswerInteractor interactor) {
+        this.interactor = interactor;
     }
 
     /**
-     * Executes the Play Card Game Use Case.
+     * Executes the Validate Card Answer Use Case.
      */
-    public void execute(Player player, String expression, List<Card> cards, CardPuzzle cardPuzzle) {
-        final ValidateCardAnswerInputData validInputData = new ValidateCardAnswerInputData(
-                player, expression, cards, cardPuzzle);
-        validateInteractor.execute(validInputData);
+    public void execute(ValidateCardAnswerInputData validateInputData) {
+        interactor.execute(validateInputData);
     }
 }

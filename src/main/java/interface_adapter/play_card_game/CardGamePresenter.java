@@ -25,6 +25,9 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
         newState.setCardPuzzle(outputData.getCardPuzzle());
         cardGameViewModel.setState(newState);
         cardGameViewModel.firePropertyChange();
+
+        viewManagerModel.setState("Math24 Card Game");
+        viewManagerModel.firePropertyChange();
     }
 
     @Override

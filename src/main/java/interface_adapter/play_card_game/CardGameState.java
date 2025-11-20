@@ -3,7 +3,7 @@ import entity.CardPuzzle;
 import interface_adapter.ViewModel;
 
 /**
- * The State information representing the logged-in user.
+ * The State information representing the card game.
  */
 public class CardGameState {
     private CardPuzzle cardPuzzle;
