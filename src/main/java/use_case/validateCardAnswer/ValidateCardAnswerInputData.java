@@ -14,16 +14,17 @@ public class ValidateCardAnswerInputData {
     private final List<Card> cards;
     private final CardPuzzle cardPuzzle;
 
-    public ValidateCardAnswerInputData(Player player, String expression, List<Card> cards, CardPuzzle cardPuzzle) {
+    public ValidateCardAnswerInputData(Player player, String expression, CardPuzzle cardPuzzle) {
         this.player = player;
         this.expression = expression;
-        this.cards = cards;
+        this.cards = cardPuzzle.getCards();
         this.cardPuzzle = cardPuzzle;
     }
 
     public Player getPlayer() {
         return this.player;
     }
+
     public String getExpression() {
         return this.expression;
 
@@ -31,6 +32,7 @@ public class ValidateCardAnswerInputData {
     public List<Card> getCards() {
         return this.cards;
     }
+
     public CardPuzzle getCardPuzzle() {
         return this.cardPuzzle;
     }

@@ -2,10 +2,8 @@ package interface_adapter.validate_card_answer;
 
 import interface_adapter.play_card_game.CardGameState;
 import interface_adapter.play_card_game.CardGameViewModel;
-import use_case.validateCardAnswer.ValidateCardAnswerInputData;
 import use_case.validateCardAnswer.ValidateCardAnswerOutputBoundary;
 import use_case.validateCardAnswer.ValidateCardAnswerOutputData;
-import interface_adapter.ViewManagerModel;
 
 /**
  * The Presenter for the Validate Card Answer Use Case.
@@ -22,7 +20,7 @@ public class ValidateCardPresenter implements ValidateCardAnswerOutputBoundary {
         String feedback = outputData.getMessage();
         CardGameState current = this.cardGameViewModel.getState();
         CardGameState newState = new CardGameState(current);
-        newState.setAnswerFeedback(feedback);
+        newState.setMessage(feedback);
         newState.setSolved();
 
         this.cardGameViewModel.setState(newState);
@@ -34,7 +32,7 @@ public class ValidateCardPresenter implements ValidateCardAnswerOutputBoundary {
         String message = outputData.getMessage();
         CardGameState state = this.cardGameViewModel.getState();
         CardGameState newState = new CardGameState(state);
-        newState.setAnswerFeedback(message);
+        newState.setMessage(message);
         this.cardGameViewModel.setState(newState);
         this.cardGameViewModel.firePropertyChange();
     }

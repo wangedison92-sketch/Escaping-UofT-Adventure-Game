@@ -23,6 +23,7 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
         CardGameState current = cardGameViewModel.getState();
         CardGameState newState = new CardGameState(current);
         newState.setCardPuzzle(outputData.getCardPuzzle());
+        newState.setMessage(outputData.getCardPuzzle().getMessage());
         cardGameViewModel.setState(newState);
         cardGameViewModel.firePropertyChange();
 
@@ -34,7 +35,7 @@ public class CardGamePresenter implements PlayCardGameOutputBoundary {
     public void prepareFailView(String errorMessage) {
         CardGameState current = cardGameViewModel.getState();
         CardGameState newState = new CardGameState(current);
-        newState.setErrorMessage(errorMessage);
+        newState.setMessage(errorMessage);
         newState.setCardPuzzle(null);
         cardGameViewModel.setState(newState);
         cardGameViewModel.firePropertyChange();

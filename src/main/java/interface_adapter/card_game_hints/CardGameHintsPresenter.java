@@ -31,7 +31,7 @@ public class CardGameHintsPresenter implements CardGameHintsOutputBoundary {
         CardGameState current = this.cardGameViewModel.getState();
         CardGameState newState = new CardGameState(current);
 
-        newState.setErrorMessage(errorMessage);
+        newState.setMessage(errorMessage);
 
         this.cardGameViewModel.setState(newState);
         this.cardGameViewModel.firePropertyChange();

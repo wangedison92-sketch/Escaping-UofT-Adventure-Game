@@ -8,13 +8,9 @@ import entity.Card;
  */
 public class CardPuzzle extends Puzzle {
     private final List<Card> cards;
-    private final String sampleSolution;
-    public static String DESCRIPTION =
-            "Welcome to the Math24 Card Puzzle! " +
-                    "Do you see the 4 random cards presented to you? \n" +
-                    "Try to connect them using \"+\", \"-\", \"*\", \"/\", and parentheses " +
-                    "to get an expression that evaluates to 24!";
-    private final String hint;
+    private String sampleSolution;
+    private String hint;
+    private String message;
     private static final String NAME = "CardPuzzle";
 
     /**
@@ -23,11 +19,37 @@ public class CardPuzzle extends Puzzle {
      */
 
     public CardPuzzle(List<Card> cards) {
-        super("", DESCRIPTION, NAME);
+        super("", "Math 24 Game", NAME);
         this.cards = cards;
         this.sampleSolution = this.solve();
         String inner = this.extractInner();
         this.hint = "Maybe try " + inner + " first.";
+        this.message = "\"Welcome to the Math24 Card Puzzle! \" +\n" +
+                "                    \"Try to connect the four card numbers below\" +\n" +
+                "                    \"using \\\"+\\\", \\\"-\\\", \\\"*\\\", \\\"/\\\", and parentheses \" +\n" +
+                "                    \"to get an expression that evaluates to 24!\";" +
+                this.getCardNumberString();
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public List<Integer> getCardNumbers() {
+        List<Integer> cardNumbers = new ArrayList<>();
+        for (Card card : cards) {
+            cardNumbers.add(card.getValue());
+        }
+        return cardNumbers;
+    }
+
+    public String getCardNumberString() {
+        List<Integer> cardNumbers = this.getCardNumbers();
+        return cardNumbers.toString();
+    }
+
+    public String getMessage() {
+        return this.message;
     }
 
     private String extractInner() {

@@ -7,24 +7,21 @@ import entity.CardPuzzle;
 public class CardGameState {
     private CardPuzzle cardPuzzle;
     private String hint;
-    private String answerFeedback;
+    private String message;
     private boolean solved;
-    private String errorMessage = "";
 
     public CardGameState () {
         this.cardPuzzle = null;
         this.hint = "";
-        this.answerFeedback = "";
+        this.message = "";
         this.solved = false;
-        this.errorMessage = "";
     }
 
     public CardGameState (CardGameState other) {
         this.cardPuzzle = other.getcardPuzzle();
         this.hint = other.getHint();
-        this.answerFeedback = other.getAnswerFeedback();
+        this.message = other.getMessage();
         this.solved = other.solved;
-        this.errorMessage = other.errorMessage;
     }
 
     public CardPuzzle getcardPuzzle() {
@@ -43,11 +40,11 @@ public class CardGameState {
         this.hint = hint;
     }
 
-    public String getAnswerFeedback() {
-        return this.answerFeedback;
+    public String getMessage() {
+        return this.message;
     }
-    public void setAnswerFeedback(String answerFeedback) {
-        this.answerFeedback = answerFeedback;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public boolean isSolved() {
@@ -56,14 +53,6 @@ public class CardGameState {
 
     public void setSolved() {
         this.solved = true;
-    }
-
-    public String getErrorMessage() {
-        return this.errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
     }
 
 }
