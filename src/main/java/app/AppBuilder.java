@@ -16,10 +16,6 @@ import view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
 
-// TODO: Add imports
-import interface_adapter.clear_history.ClearHistoryController;
-import interface_adapter.clear_history.ClearHistoryPresenter;
-
 // Save Progress imports
 import interface_adapter.save_progress.SaveProgressController;
 import interface_adapter.save_progress.SaveProgressPresenter;
@@ -39,25 +35,24 @@ import use_case.view_progress.ViewProgressOutputBoundary;
 import use_case.view_progress.ViewProgressDataAccessInterface;
 
 public class AppBuilder {
+
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
-    // TODO: Add Factories
-    final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
-
-    // TODO: Implement DAO
+    private final ViewManagerModel viewManagerModel = new ViewManagerModel();
+    public final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // ViewModels
     private NavigateViewModel navigateViewModel;
     private ClearHistoryViewModel clearHistoryViewModel;
+    private ViewProgressViewModel viewProgressViewModel;
 
     // Views
     private HomeView homeView;
     private NavigateView navigateView;
     private InstructionsView instructionsView;
 
-
-    private ViewProgressViewModel viewProgressViewModel;
+    // Track screen
+    private String initialViewName = null;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -65,24 +60,15 @@ public class AppBuilder {
 
     public AppBuilder addView(JPanel view, String name) {
         cardPanel.add(view, name);
-        private String initialViewName;
+
+        // first view becomes initial view
+        if (initialViewName == null) {
+            initialViewName = name;
+        }
         return this;
     }
-
-    // TODO: Implement add<item>UseCase()
-    public AppBuilder add___UseCase() {
-        /* Structure:
-        final <item>OutputBoundary i = new <item>Presenter(...);
-        final <item>InputBoundary j = new <item>Interactor>(...);
-        <item>Controller k = new <item>Controller(...);
-        <item>View.setController(k) // (private variable in AppBuilder)
-        return this;
-         */
-    }
-
 
     public AppBuilder addClearHistoryUseCase() {
-
         ClearHistoryOutputBoundary outputBoundary =
                 new ClearHistoryPresenter(clearHistoryViewModel);
         ClearHistoryInputBoundary inputBoundary =
@@ -115,29 +101,33 @@ public class AppBuilder {
     }
 
     public JFrame build() {
-        ViewManager viewManager;
 
         // ViewModels
         navigateViewModel = new NavigateViewModel();
         clearHistoryViewModel = new ClearHistoryViewModel();
 
-        // Views
+        // Create Views
         homeView = new HomeView(viewManagerModel);
         navigateView = new NavigateView();
+        instructionsView = new InstructionsView();
 
+        // Register views
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
-        addView(instructionsView, InstructionsView.VIEW_NAME);   // ← ADD THIS
+        addView(instructionsView, InstructionsView.VIEW_NAME);
 
+        // Add use cases
         addClearHistoryUseCase();
 
+        // Build window
         JFrame window = new JFrame("UofT Adventure Game");
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(900, 650);
         window.setResizable(false);
 
-        window.add(cardPanel);
+        window.add(viewManager.getCardPanel());
 
+        // Show initial view
         viewManagerModel.setState(initialViewName);
         viewManagerModel.firePropertyChange();
 
