@@ -33,5 +33,8 @@ public class WinGamePresenter implements WinGameOutputBoundary {
         state.setMessage(errorMessage);
 
         winGameViewModel.firePropertyChange();
+
+        viewManagerModel.setState(winGameViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }

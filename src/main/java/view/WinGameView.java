@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.win_game.WinGameState;
 import interface_adapter.win_game.WinGameViewModel;
+import interface_adapter.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,15 +12,16 @@ import java.beans.PropertyChangeListener;
 public class WinGameView extends JPanel implements PropertyChangeListener {
     private final String viewName = "win game";
     private final WinGameViewModel viewModel;
+    private final ViewManagerModel viewManagerModel;
 
     private final JLabel titleLabel;
     private final JLabel messageLabel;
     private final JLabel keysLabel;
-    private final JButton newGameButton;
-    private final JButton quitButton;
+    private final JPanel buttonPanel;
 
-    public WinGameView(WinGameViewModel viewModel) {
+    public WinGameView(WinGameViewModel viewModel, ViewManagerModel viewManagerModel) {
         this.viewModel = viewModel;
+        this.viewManagerModel = viewManagerModel;
         this.viewModel.addPropertyChangeListener(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -34,20 +36,7 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
         keysLabel = new JLabel();
         keysLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel buttonPanel = new JPanel();
-        newGameButton = new JButton("New Game");
-        quitButton = new JButton("Quit");
-
-        newGameButton.addActionListener(e -> {
-            System.exit(0);
-        });
-
-        quitButton.addActionListener(e -> {
-            System.exit(0);
-        });
-
-        buttonPanel.add(newGameButton);
-        buttonPanel.add(quitButton);
+        buttonPanel = new JPanel();
 
         add(Box.createVerticalGlue());
         add(titleLabel);
@@ -64,14 +53,38 @@ public class WinGameView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         WinGameState state = (WinGameState) evt.getNewValue();
 
+        buttonPanel.removeAll();
+
         if (state.isWon()) {
             titleLabel.setText("Congratulations!");
             messageLabel.setText(state.getMessage());
             keysLabel.setText("Keys collected: " + state.getKeysCollected());
+
+            JButton newGameButton = new JButton("New Game");
+            JButton quitButton = new JButton("Quit");
+
+            newGameButton.addActionListener(e -> System.exit(0));
+            quitButton.addActionListener(e -> System.exit(0));
+
+            buttonPanel.add(newGameButton);
+            buttonPanel.add(quitButton);
         } else {
             titleLabel.setText("Not Yet!");
             messageLabel.setText(state.getMessage());
+            keysLabel.setText("");
+
+            JButton backButton = new JButton("Return to Kings College Circle");
+
+            backButton.addActionListener(e -> {
+                viewManagerModel.setState("navigate");
+                viewManagerModel.firePropertyChange();
+            });
+
+            buttonPanel.add(backButton);
         }
+
+        buttonPanel.revalidate();
+        buttonPanel.repaint();
     }
 
     public String getViewName() {
