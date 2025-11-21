@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HomeView extends JPanel {
-
-    public static final String VIEW_NAME = "main_menu";
-
+    public static final String VIEW_NAME = "home_view";
     private JButton startButton;
 
     public HomeView() {

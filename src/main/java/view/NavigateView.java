@@ -13,6 +13,7 @@ public class NavigateView extends javax.swing.JFrame {
     // CONTROLLERS
     private QuitGameController quitGameController;
     private ClearHistoryController clearHistoryController;
+    public static final String VIEW_NAME = "navigate_view";
 
     // DIALOGS
     private QuitGameDialog quitGameDialog;
