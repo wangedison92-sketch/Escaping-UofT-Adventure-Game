@@ -84,19 +84,6 @@ public class TriviaPuzzle extends Puzzle {
     }
 
     /**
-     * Validates whether a given solution is correct for the current question.
-     * @param solution the proposed solution to validate
-     * @return true if the solution matches the correct answer (case-insensitive)
-     */
-    @Override
-    public boolean validateSolution(String solution) {
-        if (correctAnswer == null) {
-            return false;
-        }
-        return solution.equalsIgnoreCase(correctAnswer);
-    }
-
-    /**
      * Resets the puzzle progress to zero correct answers.
      * Useful if you want to let players retry the entire puzzle.
      */
