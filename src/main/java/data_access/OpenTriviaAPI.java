@@ -26,7 +26,7 @@ public class OpenTriviaAPI implements TriviaGameDataAccessInterface {
             JSONArray results = json.getJSONArray("results");
             JSONObject questionObj = results.getJSONObject(0);
 
-            String question = questionObj.getString("question");
+            String question = decodeHtmlEntities(questionObj.getString("question"));
             String correctAnswer = questionObj.getString("correct_answer");
 
             return new String[]{question, correctAnswer};
@@ -35,5 +35,19 @@ public class OpenTriviaAPI implements TriviaGameDataAccessInterface {
             e.printStackTrace();
             return new String[]{"Error loading question", "True"};
         }
+    }
+
+    private String decodeHtmlEntities(String text) {
+        return text.replace("&quot;", "\"")
+                .replace("&#039;", "'")
+                .replace("&amp;", "&")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&rsquo;", "'")
+                .replace("&ldquo;", "\"")
+                .replace("&rdquo;", "\"")
+                .replace("&hellip;", "...")
+                .replace("&eacute;", "é")
+                .replace("&nbsp;", " ");
     }
 }
