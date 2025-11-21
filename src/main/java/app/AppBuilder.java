@@ -1,12 +1,21 @@
-package main.java.app;
+package app;
 
-import main.java.interface_adapter.ViewManagerModel;
-import main.java.view.ViewManager;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.clear_history.ClearHistoryPresenter;
+import interface_adapter.navigate.NavigateViewModel;
+import use_case.clear_history.ClearHistoryInputBoundary;
+import use_case.clear_history.ClearHistoryInteractor;
+import use_case.clear_history.ClearHistoryOutputBoundary;
+import view.NavigateView;
+import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 
 // TODO: Add imports
+import interface_adapter.clear_history.ClearHistoryController;
+import interface_adapter.clear_history.ClearHistoryPresenter;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -18,19 +27,19 @@ public class AppBuilder {
     // TODO: Implement DAO
 
     // TODO: Implement Views and View Models
+    private NavigateViewModel NavigateViewModel;
+    private NavigateView NavigateView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
 
-    // TODO: Implement add<item>View()
-    public AppBuilder add___View() {
-        /* Structure:
-        <item>ViewModel i = new <item>ViewModel(...);
-        <item>View j = new <item>View(...);
-        cardPanel.add(j, j.getViewName());
+    public AppBuilder addView(JPanel view, String viewName) {
+        cardPanel.add(view, viewName);
+        if (initialViewName == null) {
+            initialViewName = viewName;
+        }
         return this;
-         */
     }
 
     // TODO: Implement add<item>UseCase()
@@ -44,17 +53,24 @@ public class AppBuilder {
          */
     }
 
-    public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        application.add(cardPanel);
-
-        viewManagerModel.setState(signupView.getViewName());
-        viewManagerModel.firePropertyChange();
-
-        return application;
+    public AppBuilder addClearHistoryUseCase() {
+        final ClearHistoryOutputBoundary outputBoundary = new ClearHistoryPresenter(NavigateViewModel);
+        final ClearHistoryInputBoundary inputBoundary = new ClearHistoryInteractor(outputBoundary);
+        ClearHistoryController controller = new ClearHistoryController(inputBoundary);
+        NavigateView.setClearHistoryController(controller);
+        return this;
     }
 
+    public JFrame build() {
+        JFrame window = new JFrame("UofT Adventure Game");
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        window.setSize(900, 650);
+        window.setResizable(false);
 
+        window.add(cardPanel);
+        viewManagerModel.setState(initialViewName);
+        viewManagerModel.firePropertyChange();
+        window.setVisible(true);
+        return window;
+    }
 }
