@@ -1,5 +1,6 @@
 package app;
 
+import data_access.FileGameDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.clear_history.*;
 import interface_adapter.navigate.NavigateViewModel;
@@ -91,7 +92,13 @@ public class AppBuilder {
         quitController.setShowQuitDialog(quitDialog::show);
         quitController.setShowSaveDialog(saveDialog::show);
         navigateView.setQuitGameController(quitController, saveController);
+
         addClearHistoryUseCase();
+
+        FileGameDataAccessObject dao = new FileGameDataAccessObject("game_data.json");
+        addSaveProgressUseCase(dao);
+        addViewProgressUseCase(dao);
+
         JFrame window = new JFrame("UofT Adventure Game");
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(900, 650);
