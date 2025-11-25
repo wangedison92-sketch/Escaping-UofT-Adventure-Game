@@ -5,21 +5,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import entity.Card;
+import use_case.validate_card_answer.utilities.Expression24Verifier;
 
 public class SolutionGenerator {
     private static final List<String> OPERATORS = Arrays.asList("+", "-", "*", "/");
 
-    public static List<String> find24Solutions(List<Card> cards) {
+    private static final List<ExpressionPattern> PATTERNS = List.of(
+            (a, b, c, d, op1, op2, op3) -> "((" + a + op1 + b + ")" + op2 + c + ")" + op3 + d,
+            (a, b, c, d, op1, op2, op3) -> "(" + a + op1 + "(" + b + op2 + c + "))" + op3 + d,
+            (a, b, c, d, op1, op2, op3) -> "(" + a + op1 + b + ")" + op2 + "(" + c + op3 + d + ")",
+            (a, b, c, d, op1, op2, op3) -> a + op1 + "((" + b + op2 + c + ")" + op3 + d + ")",
+            (a, b, c, d, op1, op2, op3) -> a + op1 + "(" + b + op2 + "(" + c + op3 + d + "))"
+    );
+
+    @FunctionalInterface
+    private interface ExpressionPattern {
+        String apply(int a, int b, int c, int d, String op1, String op2, String op3);
+    }
+
+    public static String getFirstSolution(List<Card> cards) {
         List<Integer> numbers = new ArrayList<>();
         for (Card card : cards) {
             numbers.add(card.getValue());
         }
 
-        Set<String> solutions = new HashSet<>();
-
-        List<List<Integer>> perms = generatePermutations(numbers);
-
-        for (List<Integer> perm : perms) {
+        for (List<Integer> perm : generatePermutations(numbers)) {
             int a = perm.get(0);
             int b = perm.get(1);
             int c = perm.get(2);
@@ -28,34 +38,23 @@ public class SolutionGenerator {
             for (String op1 : OPERATORS) {
                 for (String op2 : OPERATORS) {
                     for (String op3 : OPERATORS) {
-                        // Test the 5 most common expression patterns for 24 game
-                        testExpression(solutions, "((" + a + op1 + b + ")" + op2 + c + ")" + op3 + d, 24);
-                        testExpression(solutions, "(" + a + op1 + "(" + b + op2 + c + "))" + op3 + d, 24);
-                        testExpression(solutions, "(" + a + op1 + b + ")" + op2 + "(" + c + op3 + d + ")", 24);
-                        testExpression(solutions, a + op1 + "((" + b + op2 + c + ")" + op3 + d + ")", 24);
-                        testExpression(solutions, a + op1 + "(" + b + op2 + "(" + c + op3 + d + "))", 24);
+
+                        for (ExpressionPattern pattern : PATTERNS) {
+                            String expr = pattern.apply(a, b, c, d, op1, op2, op3);
+
+                            if (Expression24Verifier.isValidSolution(expr, cards)) {
+                                return expr;
+                            }
+                        }
+
                     }
                 }
             }
         }
 
-        return new ArrayList<>(solutions);
+        return "";
     }
 
-    public static boolean isSolvable(List<Card> cards) {
-        int numSol = find24Solutions(cards).size();
-        return numSol != 0;
-    }
-
-    private static void testExpression(Set<String> solutions, String expr, int target) {
-        try {
-            if (Math.abs(ExpressionEvaluator.evaluate(expr) - target) < 0.0001) {
-                solutions.add(expr);
-            }
-        } catch (Exception ignored) {
-
-        }
-    }
 
     private static List<List<Integer>> generatePermutations(List<Integer> numbers) {
         List<List<Integer>> perms = new ArrayList<>();

@@ -4,8 +4,9 @@ import entity.Card;
 import use_case.play_card_game.utilities.SolutionGenerator;
 
 import java.util.List;
+import java.util.Objects;
 
-public class CardGameHintsInteractor {
+public class CardGameHintsInteractor implements CardGameHintsInputDataBoundary{
     private final CardGameHintsOutputBoundary outputBoundary;
 
     public CardGameHintsInteractor(CardGameHintsOutputBoundary outputBoundary) {
@@ -14,9 +15,15 @@ public class CardGameHintsInteractor {
 
     public void execute(CardGameHintsInputDataObject input) {
         try {
-//            String hint = input.getCardPuzzle().giveHint();
+            String hint = "";
+
             List<Card> cards = input.getCardPuzzle().getCards();
-            String hint = getSampleSolution(cards);
+            String sol = getSampleSolution(cards);
+            if (Objects.equals(sol, "")) {
+                hint = "No solution found! Please regenerate the question.";
+            } else {
+                hint = "Maybe try " + extractInner(sol) + " first.";
+            }
 
             CardGameHintsOutputDataObject outputData = new CardGameHintsOutputDataObject(hint);
             this.outputBoundary.prepareSuccessView(outputData);
@@ -26,7 +33,7 @@ public class CardGameHintsInteractor {
     }
 
     public String getSampleSolution(List<Card> cards) {
-        return SolutionGenerator.find24Solutions(cards).get(0);
+        return SolutionGenerator.getFirstSolution(cards);
     }
 
     public String extractInner(String solution) {
@@ -36,18 +43,12 @@ public class CardGameHintsInteractor {
             open = solution.lastIndexOf("(");
             close = solution.indexOf("))");
         } else if (solution.contains("((")) {
-            open = solution.indexOf(")");
-            close = solution.indexOf("((");
+            open = solution.indexOf("((") + 1; // bruh not ts getting flipped
+            close = solution.indexOf(")");
         } else {
             open = solution.indexOf("(");
             close = solution.indexOf(")");
         }
         return solution.substring(open + 1, close);
-    }
-
-    public String generateHint(List<Card> cards) {
-        String sampleSolution = getSampleSolution(cards);
-        String substring = extractInner(sampleSolution);
-        return "Maybe try"+substring+"first.";
     }
 }
