@@ -12,10 +12,10 @@ import interface_adapter.ViewManagerModel;
 public class InstructionsView extends JPanel {
 
     public static final String VIEW_NAME = "instructions";
+    private JLabel imageLabel;
 
     public InstructionsView(ViewManagerModel viewManagerModel) throws IOException, FontFormatException {
         this.setLayout(new GridBagLayout());
-
 
 //        // font
         Font quintessentialBase = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/vanessa.hanbao/Downloads/Quintessential/Quintessential-Regular.ttf"));
@@ -48,16 +48,35 @@ public class InstructionsView extends JPanel {
         gbc.gridy++;
         this.add(title, gbc);
 
+        // image
+        ImageIcon originalImage = new ImageIcon("/Users/vanessa.hanbao/Downloads/Gemini_Generated_Image_1lcv901lcv901lcv.png");
+        int newWidth = 400;
+        int newHeight = (originalImage.getIconHeight() * newWidth) / originalImage.getIconWidth();
+        Image scaledImage = originalImage.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+//        imageLabel = new JLabel(scaledIcon);
+//        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+//        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        this.add(imageLabel);
+
+
+        imageLabel = new JLabel(scaledIcon);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+
+        gbc.gridy++;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(imageLabel, gbc);
+
         // instructions
         JTextArea text = new JTextArea(
-                "Welcome to the Escaping UofT Adventure Game!\n\n" +
-                        "You are trapped on campus and must find the optimal route to freedom.\n\n" +
-                        "GUIDELINES:\n" +
-                        "• Navigate between iconic UofT buildings.\n" +
-                        "• Make critical choices to advance or face setbacks.\n" +
-                        "• Manage your time and energy wisely.\n" +
-                        "• Your goal is to reach the campus boundary undetected.\n\n" +
-                        "Good luck, future escapee!"
+                "The night before convocation, you find yourself at King's College Circle." +
+                        "The heavy oak doors of Convocation Hall automatically deadbolt. They cannot be" +
+                        " forced open. Entry is barred to all save the bearer of the two lost keys.... \n \n" +
+                        "You are a student who accidentally got locked inside King's College Circle after "
+                        + "dark. To escape the grounds, you must trigger the release mechanism " +
+                        "inside Convocation Hall—but first, you have to get in."
         );
         text.setEditable(false);
         text.setFont(texturina);
@@ -84,7 +103,7 @@ public class InstructionsView extends JPanel {
 
         // start button
         JButton startButton = new JButton("Start Game");
-        startButton.setPreferredSize(new Dimension(300, 70));
+        startButton.setPreferredSize(new Dimension(100, 25));
         startButton.setFont(quintessential);
 
         startButton.setBackground(parchmentBackground);
@@ -123,7 +142,7 @@ public class InstructionsView extends JPanel {
         });
 
         gbc.gridy++;
-        gbc.insets = new Insets(30, 15, 30, 15);
+        gbc.insets = new Insets(8, 15, 8, 15);
         this.add(startButton, gbc);
     }
 

@@ -55,7 +55,6 @@ public class NavigateView extends JPanel {
 
     private JLabel keysLabel;
 
-//    private static final String FONT = "Arial";
     private static final String CUSTOM_FONT = "Quintessential";
 
     public NavigateView(NavigateViewModel navigateViewModel) throws IOException, FontFormatException {
@@ -68,7 +67,6 @@ public class NavigateView extends JPanel {
         Font quintessentialBase = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/vanessa.hanbao/Downloads/Quintessential/Quintessential-Regular.ttf"));
         quintessential = quintessentialBase.deriveFont(Font.PLAIN, 24);
 
-        //        JPanel topSection = new JPanel(new BorderLayout());
         JPanel topSection = new JPanel();
         topSection.setLayout(new BoxLayout(topSection, BoxLayout.Y_AXIS));
         topSection.setBackground(Color.WHITE);
@@ -97,7 +95,6 @@ public class NavigateView extends JPanel {
 
         // styling
         keysLabel.setForeground(Color.WHITE);
-//        keysLabel.setFont(new Font(FONT, Font.BOLD, 18));
         keysLabel.setFont(quintessential);
         storyArea.setEditable(false);
         storyArea.setLineWrap(true);
@@ -112,12 +109,9 @@ public class NavigateView extends JPanel {
 
         JScrollPane storyScroll = new JScrollPane(storyArea);
         storyScroll.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-//        storyScroll.setPreferredSize(new Dimension(700, 300));
         storyScroll.setPreferredSize(new Dimension(400, 100));
 
-
         // init map
-
         ImageIcon originalMap = new ImageIcon("/Users/vanessa.hanbao/Downloads/mapview.jpg");
         int newWidth = 500;
         int newHeight = (originalMap.getIconHeight() * newWidth) / originalMap.getIconWidth();
