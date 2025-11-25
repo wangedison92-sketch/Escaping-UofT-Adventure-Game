@@ -58,6 +58,7 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 // Save Progress imports
 import interface_adapter.save_progress.SaveProgressController;
@@ -257,7 +258,7 @@ public class AppBuilder {
         return this;
     }
 
-    public JFrame build(String filepath) {
+    public JFrame build(String filepath) throws IOException, FontFormatException {
         // DAO
         fileGameDataAccessObject = new FileGameDataAccessObject(filepath);
 

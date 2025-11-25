@@ -15,11 +15,17 @@ import interface_adapter.quit_game.QuitGameController;
 import interface_adapter.win_game.WinGameController;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class NavigateView extends JPanel {
     private ClearHistoryViewModel clearHistoryViewModel;
 
     public static final String VIEW_NAME = "navigate_view";
+
+    // MAP IMAGES + FONT
+    private JLabel mainMapLabel;
+    private Font quintessential;
 
     // CONTROLLERS
     private QuitGameController quitGameController;
@@ -46,20 +52,23 @@ public class NavigateView extends JPanel {
     private JButton saveButton;
     private JButton quitButton;
 
-    // MAP IMAGES
-    private JLabel mainMapLabel;
 
     private JLabel keysLabel;
 
-    private static final String FONT = "Arial";
+//    private static final String FONT = "Arial";
+    private static final String CUSTOM_FONT = "Quintessential";
 
-    public NavigateView(NavigateViewModel navigateViewModel) {
+    public NavigateView(NavigateViewModel navigateViewModel) throws IOException, FontFormatException {
         this.navigateViewModel = navigateViewModel;
 
         this.setLayout(new BorderLayout());
         this.setBackground(Color.BLACK);
 
-//        JPanel topSection = new JPanel(new BorderLayout());
+        //font
+        Font quintessentialBase = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/vanessa.hanbao/Downloads/Quintessential/Quintessential-Regular.ttf"));
+        quintessential = quintessentialBase.deriveFont(Font.PLAIN, 24);
+
+        //        JPanel topSection = new JPanel(new BorderLayout());
         JPanel topSection = new JPanel();
         topSection.setLayout(new BoxLayout(topSection, BoxLayout.Y_AXIS));
         topSection.setBackground(Color.WHITE);
@@ -88,13 +97,15 @@ public class NavigateView extends JPanel {
 
         // styling
         keysLabel.setForeground(Color.WHITE);
-        keysLabel.setFont(new Font(FONT, Font.BOLD, 18));
+//        keysLabel.setFont(new Font(FONT, Font.BOLD, 18));
+        keysLabel.setFont(quintessential);
         storyArea.setEditable(false);
         storyArea.setLineWrap(true);
         storyArea.setWrapStyleWord(true);
         storyArea.setBackground(new Color(40, 40, 40));
         storyArea.setForeground(Color.WHITE);
-        storyArea.setFont(new Font("Serif", Font.PLAIN, 22));
+//        storyArea.setFont(new Font("Serif", Font.PLAIN, 22));
+        storyArea.setFont(quintessential);
 
         // structure
         statusBar.add(keysLabel);
@@ -104,6 +115,7 @@ public class NavigateView extends JPanel {
         storyScroll.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 //        storyScroll.setPreferredSize(new Dimension(700, 300));
         storyScroll.setPreferredSize(new Dimension(400, 100));
+
 
         // init map
 
@@ -135,7 +147,8 @@ public class NavigateView extends JPanel {
 
         JLabel dirLabel = new JLabel("Choose Direction:");
         dirLabel.setForeground(Color.WHITE);
-        dirLabel.setFont(new Font(FONT, Font.BOLD, 18));
+//        dirLabel.setFont(new Font(FONT, Font.BOLD, 18));
+        dirLabel.setFont(quintessential);
 
         directionSelector = new JComboBox<>(new String[]{
                 "North", "South", "East", "West"
@@ -206,7 +219,8 @@ public class NavigateView extends JPanel {
         JButton b = new JButton(text);
         b.setBackground(new Color(70, 70, 70));
         b.setForeground(Color.WHITE);
-        b.setFont(new Font(FONT, Font.BOLD, 16));
+//        b.setFont(new Font(FONT, Font.BOLD, 16));
+        b.setFont(quintessential);
         return b;
     }
 
