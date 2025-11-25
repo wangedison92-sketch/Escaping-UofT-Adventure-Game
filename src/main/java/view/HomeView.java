@@ -40,8 +40,14 @@ public class HomeView extends JPanel {
         startButton.setFocusPainted(false);
 
         // Navigation
+//        startButton.addActionListener(e -> {
+//            viewManagerModel.setState(new NavigateViewModel().getViewName()); // ????
+//            viewManagerModel.firePropertyChange();
+//        });
+
+//        NAVIGATE TO INSTRUCTIONS VIEW FIRST
         startButton.addActionListener(e -> {
-            viewManagerModel.setState(new NavigateViewModel().getViewName()); // ????
+            viewManagerModel.setState(new InstructionsView(viewManagerModel).getViewName()); // ????
             viewManagerModel.firePropertyChange();
         });
 

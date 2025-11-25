@@ -102,9 +102,8 @@ public class NavigateView extends JPanel {
         storyArea.setEditable(false);
         storyArea.setLineWrap(true);
         storyArea.setWrapStyleWord(true);
-        storyArea.setBackground(new Color(40, 40, 40));
-        storyArea.setForeground(Color.WHITE);
-//        storyArea.setFont(new Font("Serif", Font.PLAIN, 22));
+        storyArea.setBackground(Color.WHITE);
+        storyArea.setForeground(Color.BLACK);
         storyArea.setFont(quintessential);
 
         // structure

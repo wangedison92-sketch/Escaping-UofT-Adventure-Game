@@ -3,11 +3,14 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.navigate.NavigateViewModel;
+
 public class InstructionsView extends JPanel {
 
     public static final String VIEW_NAME = "instructions";
 
-    public InstructionsView() {
+    public InstructionsView(ViewManagerModel viewManagerModel) {
         this.setLayout(new BorderLayout());
         this.setBackground(Color.DARK_GRAY);
 
@@ -28,7 +31,24 @@ public class InstructionsView extends JPanel {
         text.setBackground(Color.DARK_GRAY);
         text.setForeground(Color.WHITE);
 
+        JButton startButton = new JButton("Start Game");
+        startButton.setPreferredSize(new Dimension(200, 55));
+        startButton.setFont(new Font("Arial", Font.BOLD, 22));
+        startButton.setBackground(new Color(70, 130, 180));
+        startButton.setForeground(Color.WHITE);
+        startButton.setFocusPainted(false);
+
         this.add(title, BorderLayout.NORTH);
         this.add(text, BorderLayout.CENTER);
+        this.add(startButton, BorderLayout.SOUTH);
+
+        startButton.addActionListener(e -> {
+            viewManagerModel.setState(new NavigateViewModel().getViewName()); // ????
+            viewManagerModel.firePropertyChange();
+        });
+    }
+
+    public String getViewName() {
+        return VIEW_NAME;
     }
 }

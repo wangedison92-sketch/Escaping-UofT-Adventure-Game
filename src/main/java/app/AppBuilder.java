@@ -273,7 +273,7 @@ public class AppBuilder {
         // Create Views
         homeView = new HomeView(viewManagerModel);
         navigateView = new NavigateView(navigateViewModel);
-        instructionsView = new InstructionsView(); // i have. no idea if this exists and how it's implemented but go off
+        instructionsView = new InstructionsView(viewManagerModel); // i have. no idea if this exists and how it's implemented but go off
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
