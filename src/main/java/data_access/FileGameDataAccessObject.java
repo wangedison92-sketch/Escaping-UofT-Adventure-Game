@@ -10,15 +10,32 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
 
+import use_case.save_progress.SaveProgressDataAccessInterface;
+import use_case.view_progress.ViewProgressDataAccessInterface;
+
+import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * File-based data access object for saving and loading game progress.
+ * Implements both SaveProgressDataAccessInterface and ViewProgressDataAccessInterface.
+ */
 public class FileGameDataAccessObject implements
         SaveProgressDataAccessInterface,
         ViewProgressDataAccessInterface {
 
     private final String filePath;
+          
+    private static final String DEFAULT_LOCATION = "Kings College Circle";
 
-    private String currentLocation = "Unknown";
+    // Current game state (in-memory)
+    private String currentLocation = DEFAULT_LOCATION;
+    private Set<String> solvedPuzzles = new HashSet<>();
+
+//     private String currentLocation = "Unknown";
     private int keysCollected = 0;
-    private List<String> solvedPuzzles = new ArrayList<>();
+//     private List<String> solvedPuzzles = new ArrayList<>();
 
     /**
      * Default constructor: use default file "progress.json"
@@ -27,6 +44,12 @@ public class FileGameDataAccessObject implements
         this.filePath = "progress.json";
         loadProgress();
     }
+          
+   public FileGameDataAccessObject(String filePath) {
+        this.filePath = filePath;
+        loadProgress();
+    }
+         
 
     /**
      * Constructor with custom file path (used by AppBuilder)
