@@ -86,7 +86,6 @@ public class HomeView extends JPanel {
     }
 
     // Apply Theme Colors to All UI
-
     private void applyTheme() {
         setBackground(ThemeManager.getBackground());
 
