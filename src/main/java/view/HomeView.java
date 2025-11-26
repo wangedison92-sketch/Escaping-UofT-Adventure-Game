@@ -5,6 +5,7 @@ import view.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 public class HomeView extends JPanel {
@@ -21,6 +22,47 @@ public class HomeView extends JPanel {
     private final JLabel footer;
 
     public HomeView(ViewManagerModel viewManagerModel) {
+        this.setLayout(new BorderLayout());
+        this.setBackground(Color.BLACK);
+
+        // TITLE
+        JLabel title = new JLabel("Escaping UofT Adventure Game");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setFont(new Font("Serif", Font.BOLD, 40));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(80, 0, 20, 0));
+        this.add(title, BorderLayout.NORTH);
+
+        JPanel center = new JPanel();
+        center.setBackground(Color.BLACK);
+        this.add(center, BorderLayout.CENTER);
+
+        // START BUTTON
+        JPanel bottom = new JPanel();
+        bottom.setBackground(Color.BLACK);
+
+        startButton = new JButton("Start Game");
+        startButton.setPreferredSize(new Dimension(200, 55));
+        startButton.setFont(new Font("Arial", Font.BOLD, 22));
+        startButton.setBackground(new Color(70, 130, 180));
+        startButton.setForeground(Color.WHITE);
+        startButton.setFocusPainted(false);
+
+        // Navigation
+//        startButton.addActionListener(e -> {
+//            viewManagerModel.setState(new NavigateViewModel().getViewName()); // ????
+//            viewManagerModel.firePropertyChange();
+//        });
+
+//        NAVIGATE TO INSTRUCTIONS VIEW FIRST
+        startButton.addActionListener(e -> {
+            try {
+                viewManagerModel.setState(new InstructionsView(viewManagerModel).getViewName()); // ????
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (FontFormatException ex) {
+                throw new RuntimeException(ex);
+            }
 
         loadBackgroundImage();
         setLayout(new BorderLayout());
