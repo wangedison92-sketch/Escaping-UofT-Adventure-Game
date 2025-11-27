@@ -68,6 +68,7 @@ import view.SettingsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 // Save Progress imports
 import interface_adapter.save_progress.SaveProgressController;
@@ -269,7 +270,7 @@ public class AppBuilder {
         return this;
     }
 
-    public JFrame build(String filepath) {
+    public JFrame build(String filepath) throws IOException, FontFormatException {
         // DAO
         fileGameDataAccessObject = new FileGameDataAccessObject(filepath);
 
@@ -285,7 +286,7 @@ public class AppBuilder {
         // Create Views
         homeView = new HomeView(viewManagerModel);
         navigateView = new NavigateView(navigateViewModel);
-        instructionsView = new InstructionsView(); // i have. no idea if this exists and how it's implemented but go off
+        instructionsView = new InstructionsView(viewManagerModel); // i have. no idea if this exists and how it's implemented but go off
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
