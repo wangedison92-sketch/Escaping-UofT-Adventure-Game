@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,6 +38,17 @@ public class CardGameHintsInteractorTest {
         assertTrue(presenter.successCalled);
         assertFalse(presenter.failCalled);
         assertNotNull(presenter.lastOutputData);
+    }
+
+    @Test
+    void testGenerateHintWithKnownCards() {
+        TestPresenter presenter = new TestPresenter();
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
+        List<Card> cards = Arrays.asList(new Card(2), new Card(3), new Card(4), new Card(4));
+
+        String hint = interactor.generateHint(cards);
+        assertTrue(hint.startsWith("Maybe try"));
+        assertTrue(hint.endsWith("first."));
     }
 
 
@@ -107,6 +119,31 @@ public class CardGameHintsInteractorTest {
 
         spyInteractor.execute(input);
     }
+
+    @Test
+    public void execute() {
+        CardGameViewModel cardGameViewModel =  new CardGameViewModel();
+        ViewManagerModel viewManagerMode = new ViewManagerModel();
+        CardGameHintsPresenter presenter = new CardGameHintsPresenter(cardGameViewModel,viewManagerMode);
+        CardGameHintsInteractor interactor = new CardGameHintsInteractor(presenter);
+        CardGameHintsInputDataObject inputData = new CardGameHintsInputDataObject(null);
+        try {
+            Object hint = interactor.generateHint(inputData.getCardPuzzle().getCards());
+            if (hint == null || (hint instanceof Collection && ((Collection<?>) hint).isEmpty())) {
+                // No hints available - this is a valid success case
+                CardGameHintsOutputDataObject outputData = new CardGameHintsOutputDataObject(
+                        null// might have a flag indicating no hints
+                );
+                presenter.prepareSuccessView(outputData);
+            } else {
+                // Hints found
+                CardGameHintsOutputDataObject outputData = new CardGameHintsOutputDataObject((String) hint);
+                presenter.prepareSuccessView(outputData);
+            }
+        } catch (Exception e) {
+            presenter.prepareFailView("Failed to get hint: " + e.getMessage());
+        }
+    }
 }
 
 
@@ -127,41 +164,3 @@ class TestPresenter implements CardGameHintsOutputBoundary {
     }
 }
 
-//        private static class TestCardGameHintsPresenter implements CardGameHintsOutputBoundary {
-//            public boolean successCalled = false;
-//            public boolean failCalled = false;
-//            public CardGameHintsOutputDataObject lastOutputData;
-//            public String lastErrorMessage;
-//
-//            public TestCardGameHintsPresenter(CardGameViewModel viewModel, ViewManagerModel viewManagerModel) {
-//                // You might not even need these if you're just testing the interactor logic
-//            }
-//            @Override
-//            public void prepareSuccessView(CardGameHintsOutputDataObject output) {
-//                assertEquals("2+4",  output.getHint() );
-//                assertEquals(output.getHint(), cardGameViewModel.getState().getHint());
-//            }
-//
-//            @Override
-//            public void prepareFailView(String message) {
-//                fail("Use case failure is unexpected.");
-//            }
-
-//    }
-
-//    void testExtractInner() {
-//        String sampleSol = "(8+2)*2+4";
-//        assertEquals("8+2", CardGameHintsInteractor.extractInner(sampleSol));
-//    }
-//
-//    void testGenerateHint() {
-//        Card c1 = new Card(4);
-//        Card c2 = new Card(5);
-//        Card c3 = new Card(6);
-//        Card c4 = new Card(6);
-//        List<Card> cards = Arrays.asList(c1, c2, c3, c4);
-//
-//        CardGameHintsInteractor interactor = new CardGameHintsInteractor();
-//        String solutions = interactor.getSampleSolution(cards);
-//    }
-//}
