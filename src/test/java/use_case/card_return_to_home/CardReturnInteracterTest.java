@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class CardReturnInteracterTest {
     @Test
     public void testCardReturnInteracter() {
+        // Test whether the interacter executes the return functionality successfully
         ViewManagerModel viewManagerModel  = new ViewManagerModel();
         NavigateViewModel navigateViewModel = new NavigateViewModel();
         CardGameViewModel cardGameViewModel  = new CardGameViewModel();
