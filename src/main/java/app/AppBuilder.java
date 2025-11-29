@@ -29,6 +29,10 @@ import interface_adapter.validate_card_answer.ValidateCardPresenter;
 import interface_adapter.win_game.WinGameController;
 import interface_adapter.win_game.WinGamePresenter;
 import interface_adapter.win_game.WinGameViewModel;
+import interface_adapter.settings.SettingsViewModel;
+import interface_adapter.settings.SettingsController;
+import interface_adapter.settings.SettingsPresenter;
+
 import use_case.card_game_hints.CardGameHintsInputDataBoundary;
 import use_case.card_game_hints.CardGameHintsInteractor;
 import use_case.card_game_hints.CardGameHintsOutputBoundary;
@@ -45,6 +49,7 @@ import use_case.navigate.NavigateOutputBoundary;
 import use_case.play_card_game.PlayCardGameInputBoundary;
 import use_case.play_card_game.PlayCardGameInteractor;
 import use_case.play_card_game.PlayCardGameOutputBoundary;
+import use_case.settings.SettingsInputBoundary;
 import use_case.trivia_game.TriviaGameInputBoundary;
 import use_case.trivia_game.TriviaGameInteractor;
 import use_case.trivia_game.TriviaGameOutputBoundary;
@@ -54,10 +59,16 @@ import use_case.validate_card_answer.ValidateCardAnswerOutputBoundary;
 import use_case.win_game.WinGameInputBoundary;
 import use_case.win_game.WinGameInteractor;
 import use_case.win_game.WinGameOutputBoundary;
+import use_case.settings.SettingsOutputBoundary;
+import use_case.settings.SettingsOutputBoundary;
+import use_case.settings.SettingsInteractor;
+
 import view.*;
+import view.SettingsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 // Save Progress imports
 import interface_adapter.save_progress.SaveProgressController;
@@ -92,6 +103,7 @@ public class AppBuilder {
     private WinGameViewModel winGameViewModel;
     private CardGameViewModel cardGameViewModel;
     private TriviaGameViewModel triviaGameViewModel;
+    private SettingsViewModel settingsViewModel;
 
     // Views
     private HomeView homeView;
@@ -104,6 +116,7 @@ public class AppBuilder {
     private QuitGameDialog quitGameDialog;
     private ReturnFromCardDialogue returnFromCardDialogue;
     private ConfirmRestartGameDialog confirmRestartGameDialog;
+    private SettingsView settingsView;
 
     // oh god the player. OH GOD THE PLAYER
     Player player;
@@ -257,7 +270,7 @@ public class AppBuilder {
         return this;
     }
 
-    public JFrame build(String filepath) {
+    public JFrame build(String filepath) throws IOException, FontFormatException {
         // DAO
         fileGameDataAccessObject = new FileGameDataAccessObject(filepath);
 
@@ -268,11 +281,12 @@ public class AppBuilder {
         triviaGameViewModel = new TriviaGameViewModel();
         winGameViewModel = new WinGameViewModel();
         viewProgressViewModel = new ViewProgressViewModel();
+        settingsViewModel = new SettingsViewModel();
 
         // Create Views
         homeView = new HomeView(viewManagerModel);
         navigateView = new NavigateView(navigateViewModel);
-        instructionsView = new InstructionsView(); // i have. no idea if this exists and how it's implemented but go off
+        instructionsView = new InstructionsView(viewManagerModel); // i have. no idea if this exists and how it's implemented but go off
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
@@ -301,6 +315,16 @@ public class AppBuilder {
         addViewProgressUseCase(dao);
 
         addView(instructionsView, InstructionsView.VIEW_NAME);
+
+        // Settings
+        SettingsOutputBoundary settingsPresenter =
+                new SettingsPresenter(settingsViewModel, viewManagerModel);
+        SettingsInputBoundary settingsInteractor =
+                new SettingsInteractor(settingsPresenter);
+        SettingsController settingsController =
+                new SettingsController(settingsInteractor);
+        settingsView = new SettingsView(settingsController, settingsViewModel, viewManagerModel);
+        addView(settingsView, SettingsView.VIEW_NAME);
 
         // Add use cases
         addClearHistoryUseCase();
