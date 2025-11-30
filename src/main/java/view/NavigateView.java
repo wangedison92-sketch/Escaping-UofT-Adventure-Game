@@ -172,7 +172,7 @@ public class NavigateView extends JPanel {
         // action listeners (button + dropdown logic)
         restartButton.addActionListener(e -> {
             if (clearHistoryController != null) {
-                clearHistoryController.showConfirm();
+                clearHistoryController.showConfirmDialog();
             }
         });
 
@@ -252,10 +252,7 @@ public class NavigateView extends JPanel {
     // CLEAR GAME CONTROLLER
     public void setClearHistoryController(ClearHistoryController clearHistoryController) {
         this.clearHistoryController = clearHistoryController;
-
-        // set up runnable
-        this.confirmRestartGameDialog = new ConfirmRestartGameDialog(clearHistoryController);
-        this.clearHistoryController.setShowConfirmDialog(() -> confirmRestartGameDialog.show());
+        // removed runnable set up lol
     }
 
     // SAVE PROGRESS CONTROLLER
@@ -278,9 +275,8 @@ public class NavigateView extends JPanel {
         this.navigateController = navigateController;
     }
 
-    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
-        this.clearHistoryViewModel = vm;
-        vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
-    }
-
+//    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
+//        this.clearHistoryViewModel = vm;
+//        vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
+//    }
 }
