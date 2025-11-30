@@ -134,8 +134,12 @@ public class HomeView extends JPanel {
             URL url = getClass().getResource("/uoft_bg.png");
             if (url != null) {
                 backgroundImage = new ImageIcon(url).getImage();
+            } else {
+                System.err.println("Could not find background image");
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            System.err.println("Error loading background: " + e.getMessage());
+        }
     }
 
     @Override
