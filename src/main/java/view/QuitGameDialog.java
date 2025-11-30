@@ -67,7 +67,7 @@ public class QuitGameDialog extends JDialog implements PropertyChangeListener {
 
         else if (evt.getPropertyName().equals(QuitGameViewModel.SHOW_SAVE_DIALOG_PROPERTY)) {
             dispose();
-            SaveGameDialog saveDialog = new SaveGameDialog(saveProgressController, navigateViewModel);
+            SaveGameDialog saveDialog = new SaveGameDialog(saveProgressController, navigateViewModel, quitGameViewModel, quitGameController);
             saveDialog.showDialog();
         }
 

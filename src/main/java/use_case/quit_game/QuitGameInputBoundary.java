@@ -6,4 +6,7 @@ public interface QuitGameInputBoundary {
 
     // Shows quit game prompt
     void executeRequestQuit();
+
+    // Formally exits game
+    void exitGame();
 }

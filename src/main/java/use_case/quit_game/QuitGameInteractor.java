@@ -23,12 +23,19 @@ public class QuitGameInteractor implements QuitGameInputBoundary {
         //     userPresenter.prepareExitView();
         // }
 
-        // always show dialog
+        // SHOW SAVE DIALOG
         quitGamePresenter.prepareSavePromptView();
     }
 
+    // SHOW QUIT DIALOG HARAHRHARHARHAR
     @Override
     public void executeRequestQuit() {
         quitGamePresenter.prepareQuitView();
+    }
+
+    // FORMALLY EXIST GAME
+    @Override
+    public void exitGame() {
+        quitGamePresenter.prepareExitView();
     }
 }

@@ -19,4 +19,8 @@ public class QuitGameController {
     public void executeRequestQuit() {
         quitGameInteractor.executeRequestQuit();
     }
+
+    public void exitGame() {
+        quitGameInteractor.exitGame();
+    }
 }
