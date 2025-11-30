@@ -31,7 +31,6 @@ public class UISettings {
 
     static {
         try {
-            // Load fonts from resources (no subfolder)
             InputStream quintStream = UISettings.class.getResourceAsStream("/Quintessential-Regular.ttf");
             if (quintStream != null) {
                 quintessentialBase = Font.createFont(Font.TRUETYPE_FONT, quintStream);
@@ -50,7 +49,6 @@ public class UISettings {
                 texturina = new Font("Serif", Font.PLAIN, 24);
             }
 
-            // Load images from resources (no subfolder)
             instructionsImage = loadImageIcon("/Gemini_Generated_Image_1lcv901lcv901lcv.png");
             navigationImage = loadImageIcon("/mapview.jpg");
             conHallExtImage = loadImageIcon("/conhallext.png");

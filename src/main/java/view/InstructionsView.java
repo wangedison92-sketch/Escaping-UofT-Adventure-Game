@@ -61,7 +61,6 @@ public class InstructionsView extends JPanel {
             mainPanel.add(imageLabel);
             mainPanel.add(Box.createVerticalStrut(20));
         } else {
-            // Placeholder if image not found
             JLabel placeholder = new JLabel("[Image Not Found]");
             placeholder.setAlignmentX(Component.CENTER_ALIGNMENT);
             placeholder.setFont(texturina);
