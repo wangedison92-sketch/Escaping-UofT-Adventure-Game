@@ -30,7 +30,7 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
         }
     }
 
-    private void startNewQuestion() {
+    void startNewQuestion() {
         String[] questionData = dataAccess.fetchQuestion();
         String question = questionData[0];
         String correctAnswer = questionData[1];
