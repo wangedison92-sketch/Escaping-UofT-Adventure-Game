@@ -286,7 +286,7 @@ public class AppBuilder {
         // Create Views
         homeView = new HomeView(viewManagerModel);
         navigateView = new NavigateView(navigateViewModel);
-        instructionsView = new InstructionsView(viewManagerModel); // i have. no idea if this exists and how it's implemented but go off
+        instructionsView = new InstructionsView(viewManagerModel);
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
@@ -295,7 +295,6 @@ public class AppBuilder {
         navigateView.setClearHistoryViewModel(clearHistoryViewModel);
 
         // Register views
-        // switch the name to something from view model because consistency and also. what.
         addView(homeView, HomeView.VIEW_NAME);
         addView(navigateView, NavigateView.VIEW_NAME);
         addView(instructionsView, InstructionsView.VIEW_NAME);
