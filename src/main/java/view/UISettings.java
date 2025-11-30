@@ -56,7 +56,12 @@ public class UISettings {
     public static ImageIcon instructionsImage = new ImageIcon(INSTRUCTIONS_IMAGE_PATH);
     public static ImageIcon navigationImage = new ImageIcon(NAVIGATE_IMAGE_PATH);
     public static ImageIcon conHallImage = new ImageIcon(CONHALL_EXT_IMAGE_PATH);
-
+    public static ImageIcon conHallIntImage = new ImageIcon(CONHALL_INT_IMAGE_PATH);
+    public static ImageIcon conHallExtImage = new ImageIcon(CONHALL_EXT_IMAGE_PATH);
+    public static ImageIcon knoxExtImage = new ImageIcon(KNOX_EXT_IMAGE_PATH);
+    public static ImageIcon knoxIntImage = new ImageIcon(KNOX_INT_IMAGE_PATH);
+    public static ImageIcon gersteinIntImage = new ImageIcon(GERSTEIN_INT_IMAGE_PATH);
+    public static ImageIcon gersteinExtImage = new ImageIcon(GERSTEIN_EXT_IMAGE_PATH);
 
     public UISettings() throws IOException, FontFormatException {
         // insert code if needed
