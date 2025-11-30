@@ -14,16 +14,11 @@ import use_case.card_game_hints.CardGameHintsInputDataObject;
 import use_case.card_game_hints.CardGameHintsInteractor;
 import use_case.card_game_hints.CardGameHintsOutputBoundary;
 import use_case.card_game_hints.CardGameHintsOutputDataObject;
-import use_case.play_card_game.PlayCardGameInteractor.*;
 import use_case.play_card_game.utilities.SolutionGenerator;
-import use_case.play_card_game.utilities.TwentyFourChecker;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-
-import static org.mockito.Mockito.*;
-import org.mockito.Mockito;
 
 class PlayCardGameInteractorTest {
 
@@ -131,11 +126,11 @@ class PlayCardGameInteractorTest {
 
         assertEquals("Failed to draw 4 card, sorry!", mockPresenter.errorMessage);
         assertTrue(mockPresenter.failViewCalled, "prepareFailView should be called");
-        assertEquals(true, interactor.extracted(cardGameDataAccessObject.drawCards()));
+        assertEquals(true, interactor.failCardDraw(cardGameDataAccessObject.drawCards()));
     }
 
     @Test
-    void testExtractedNull() {
+    void testFailCardDrawNull() {
         // Test extracted with an empty card set
         // Use the TestPlayCardGamePresenter directly with the interactor
         List<Card> cards = null;
@@ -145,7 +140,7 @@ class PlayCardGameInteractorTest {
         CardGameDataAccessObject cardGameDataAccessObject = new CardGameDataAccessObject(0);
 
         PlayCardGameInteractor interactor = new PlayCardGameInteractor(cardGameDataAccessObject, mockPresenter);
-        assertEquals(true, interactor.extracted(cards));
+        assertEquals(true, interactor.failCardDraw(cards));
     }
 
     @Test

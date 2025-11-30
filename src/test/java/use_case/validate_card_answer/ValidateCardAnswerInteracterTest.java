@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class ValidateCardAnswerInteracterTest {
     @Test
     void successNewGameTest() {
+        // Test the interactor for a successful input
         CardGameViewModel cardGameViewModel = new CardGameViewModel();
         ValidateCardAnswerOutputBoundary mockPresenter = new ValidateCardPresenter(cardGameViewModel) {
             @Override
@@ -46,6 +47,7 @@ public class ValidateCardAnswerInteracterTest {
 
     @Test
     void failNewGameTest() {
+        // Test the interactor with a fail input with less than 4 cards used
         TestPresenter mockPresenter = new TestPresenter();
         ValidateCardAnswerInteractor interactor = new ValidateCardAnswerInteractor(mockPresenter);
         List<Card> cards = Arrays.asList(new Card(2), new Card(3), new Card(4), new Card(1));
@@ -59,6 +61,7 @@ public class ValidateCardAnswerInteracterTest {
 
     @Test
     void failNewGameTest2() {
+        // Test the interactor with a fail input with invalid expression
         TestPresenter mockPresenter = new TestPresenter();
         ValidateCardAnswerInteractor interactor = new ValidateCardAnswerInteractor(mockPresenter);
         List<Card> cards = Arrays.asList(new Card(2), new Card(3), new Card(4), new Card(1));
@@ -72,6 +75,7 @@ public class ValidateCardAnswerInteracterTest {
 
     @Test
     void failNewGameTest3() {
+        // Test the interactor with a fail input with less than 4 cards
         TestPresenter mockPresenter = new TestPresenter();
         ValidateCardAnswerInteractor interactor = new ValidateCardAnswerInteractor(mockPresenter);
         List<Card> cards = Arrays.asList(new Card(2), new Card(3), new Card(1));
@@ -85,6 +89,7 @@ public class ValidateCardAnswerInteracterTest {
 }
 
 class TestPresenter implements ValidateCardAnswerOutputBoundary {
+    // Mock presenter for the purpose of testing
     public boolean successCalled = false;
     public boolean failCalled = false;
     public CardGameHintsOutputDataObject lastOutputData = null;

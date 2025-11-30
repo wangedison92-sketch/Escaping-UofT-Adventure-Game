@@ -18,7 +18,7 @@ public class TwentyFourChecker {
         return solve(nums);
     }
 
-    static List<Double> cardParser(List<Card> cards) {
+    private static List<Double> cardParser(List<Card> cards) {
         List<Double> nums = new ArrayList<>();
         for (Card card : cards) {
             nums.add((double)card.getValue());
