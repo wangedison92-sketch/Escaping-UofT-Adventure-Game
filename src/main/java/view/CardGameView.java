@@ -251,18 +251,18 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
 
     // Code Theme
     private void applyTheme() {
-        this.setBackground(view.ThemeManager.getBackground());
+        this.setBackground(view.theme.ThemeManager.getBackground());
 
         // Text Areas and Labels
-        promptArea.setBackground(view.ThemeManager.getBackground());
-        promptArea.setForeground(view.ThemeManager.getTextPrimary());
-        promptArea.setFont(PROMPT_FONT.deriveFont(view.ThemeManager.getFontSize((int) 18f)));
+        promptArea.setBackground(view.theme.ThemeManager.getBackground());
+        promptArea.setForeground(view.theme.ThemeManager.getTextPrimary());
+        promptArea.setFont(PROMPT_FONT.deriveFont(view.theme.ThemeManager.getFontSize((int) 18f)));
 
-        hintLabel.setForeground(view.ThemeManager.getTextPrimary());
-        hintLabel.setFont(MESSAGE_FONT.deriveFont(view.ThemeManager.getFontSize((int) 14f)));
+        hintLabel.setForeground(view.theme.ThemeManager.getTextPrimary());
+        hintLabel.setFont(MESSAGE_FONT.deriveFont(view.theme.ThemeManager.getFontSize((int) 14f)));
 
-        messageLabel.setFont(MESSAGE_FONT.deriveFont(view.ThemeManager.getFontSize((int) 14f)));
-        messageLabel.setForeground(view.ThemeManager.getTextPrimary());
+        messageLabel.setFont(MESSAGE_FONT.deriveFont(view.theme.ThemeManager.getFontSize((int) 14f)));
+        messageLabel.setForeground(view.theme.ThemeManager.getTextPrimary());
 
         // Input Area
         answerField.setBackground(Color.WHITE);
@@ -270,7 +270,7 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         answerField.setCaretColor(Color.BLACK);
 
         // Card styling
-        Color cardBorder = view.ThemeManager.getTextPrimary();
+        Color cardBorder = view.theme.ThemeManager.getTextPrimary();
 
         for (int i = 0; i < 4; i++) {
             JLabel card = cardLabels[i];
@@ -287,12 +287,12 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
 
     private void styleButton(JButton b) {
         b.setPreferredSize(new Dimension(200, 40));
-        b.setBackground(view.ThemeManager.getButtonBackground());
-        b.setForeground(view.ThemeManager.getButtonForeground());
-        b.setFont(new Font("Arial", Font.BOLD, view.ThemeManager.getFontSize(14)));
+        b.setBackground(view.theme.ThemeManager.getButtonBackground());
+        b.setForeground(view.theme.ThemeManager.getButtonForeground());
+        b.setFont(new Font("Arial", Font.BOLD, view.theme.ThemeManager.getFontSize(14)));
 
         b.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(view.ThemeManager.getButtonForeground(), 2),
+                BorderFactory.createLineBorder(view.theme.ThemeManager.getButtonForeground(), 2),
                 BorderFactory.createEmptyBorder(8, 15, 8, 15)
         ));
         b.setFocusPainted(false);
@@ -301,17 +301,16 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
     private void styleOperatorButton(JButton b) {
         if (b.getText().equals("Clear")) {
             b.setPreferredSize(new Dimension(80, 40));
-            b.setFont(new Font("Arial", Font.BOLD, view.ThemeManager.getFontSize(14)));
+            b.setFont(new Font("Arial", Font.BOLD, view.theme.ThemeManager.getFontSize(14)));
         } else {
             b.setPreferredSize(new Dimension(40, 40));
-            b.setFont(new Font("Arial", Font.BOLD, view.ThemeManager.getFontSize(18)));
+            b.setFont(new Font("Arial", Font.BOLD, view.theme.ThemeManager.getFontSize(18)));
         }
 
-        b.setBackground(view.ThemeManager.getButtonBackground());
-        b.setForeground(view.ThemeManager.getButtonForeground());
-
+        b.setBackground(view.theme.ThemeManager.getButtonBackground());
+        b.setForeground(view.theme.ThemeManager.getButtonForeground());
         b.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(view.ThemeManager.getButtonForeground(), 1),
+                BorderFactory.createLineBorder(view.theme.ThemeManager.getButtonForeground(), 1),
                 BorderFactory.createEmptyBorder(0, 0, 0, 0)
         ));
         b.setFocusPainted(false);
@@ -323,7 +322,7 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
             CardGameState state = cardGameViewModel.getState();
             state.setHint("");
             resetInputState();
-            messageLabel.setForeground(view.ThemeManager.getTextPrimary());
+            messageLabel.setForeground(view.theme.ThemeManager.getTextPrimary());
         });
 
         hintButton.addActionListener(e -> {
@@ -407,7 +406,7 @@ public class CardGameView extends JPanel implements PropertyChangeListener {
         } else if (state.getMessage().contains("Invalid") || state.getMessage().contains("incorrect")) {
             messageLabel.setForeground(Color.RED);
         } else {
-            messageLabel.setForeground(view.ThemeManager.getTextPrimary()); // Default theme
+            messageLabel.setForeground(view.theme.ThemeManager.getTextPrimary()); // Default theme
         }
 
         applyTheme();
