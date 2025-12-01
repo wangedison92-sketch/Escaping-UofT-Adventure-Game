@@ -45,7 +45,7 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
         presenter.presentQuestion(outputData);
     }
 
-    private void submitAnswer(String playerAnswer) {
+    public void submitAnswer(String playerAnswer) {
         boolean isCorrect = puzzle.checkAnswer(playerAnswer);
 
         String message;
@@ -67,7 +67,7 @@ public class TriviaGameInteractor implements TriviaGameInputBoundary {
         presenter.presentResult(outputData);
     }
 
-    private void exitPuzzle() {
+    public void exitPuzzle() {
         presenter.exitPuzzle();
     }
 }
