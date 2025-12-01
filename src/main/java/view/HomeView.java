@@ -1,7 +1,7 @@
 package view;
 
 import interface_adapter.ViewManagerModel;
-import view.ThemeManager;
+import view.theme.ThemeManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +86,6 @@ public class HomeView extends JPanel {
     }
 
     // Apply Theme Colors to All UI
-
     private void applyTheme() {
         setBackground(ThemeManager.getBackground());
 
@@ -135,8 +134,12 @@ public class HomeView extends JPanel {
             URL url = getClass().getResource("/uoft_bg.png");
             if (url != null) {
                 backgroundImage = new ImageIcon(url).getImage();
+            } else {
+                System.err.println("Could not find background image");
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            System.err.println("Error loading background: " + e.getMessage());
+        }
     }
 
     @Override

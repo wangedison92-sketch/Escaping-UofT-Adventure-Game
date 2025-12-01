@@ -172,7 +172,7 @@ public class NavigateView extends JPanel {
         // action listeners (button + dropdown logic)
         restartButton.addActionListener(e -> {
             if (clearHistoryController != null) {
-                clearHistoryController.showConfirm();
+                clearHistoryController.showConfirmDialog();
             }
         });
 
@@ -194,13 +194,14 @@ public class NavigateView extends JPanel {
 
         quitButton.addActionListener(e -> {
             if (quitGameController != null) {
-                quitGameController.showQuit();
+//                quitGameController.showQuit();
+                quitGameController.executeRequestQuit();
             }
         });
 
         directionSelector.addActionListener(e -> {
             if (navigateController != null) {
-                System.out.println("selected direction: " + directionSelector.getSelectedItem());
+//                System.out.println("selected direction: " + directionSelector.getSelectedItem());
                 navigateController.execute((String) directionSelector.getSelectedItem());
             }
         });
@@ -238,24 +239,20 @@ public class NavigateView extends JPanel {
     }
 
     // QUIT GAME CONTROLLER
-    public void setQuitGameController(QuitGameController quitGameController,
-                                      SaveProgressController saveProgressController) {
+    public void setQuitGameController(QuitGameController quitGameController) {
         this.quitGameController = quitGameController;
 
         // set up runnable
-        this.quitGameDialog = new QuitGameDialog(quitGameController, saveProgressController, navigateViewModel);
-        this.saveGameDialog = new SaveGameDialog(saveProgressController, navigateViewModel);
-        this.quitGameController.setShowQuitDialog(() -> quitGameDialog.show());
-        this.quitGameController.setShowSaveDialog(() -> saveGameDialog.show());
+//        this.quitGameDialog = new QuitGameDialog(quitGameController, saveProgressController, navigateViewModel);
+//        this.saveGameDialog = new SaveGameDialog(saveProgressController, navigateViewModel);
+//        this.quitGameController.setShowQuitDialog(() -> quitGameDialog.show());
+//        this.quitGameController.setShowSaveDialog(() -> saveGameDialog.show());
     }
 
     // CLEAR GAME CONTROLLER
     public void setClearHistoryController(ClearHistoryController clearHistoryController) {
         this.clearHistoryController = clearHistoryController;
-
-        // set up runnable
-        this.confirmRestartGameDialog = new ConfirmRestartGameDialog(clearHistoryController);
-        this.clearHistoryController.setShowConfirmDialog(() -> confirmRestartGameDialog.show());
+        // removed runnable set up lol
     }
 
     // SAVE PROGRESS CONTROLLER
@@ -278,9 +275,8 @@ public class NavigateView extends JPanel {
         this.navigateController = navigateController;
     }
 
-    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
-        this.clearHistoryViewModel = vm;
-        vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
-    }
-
+//    public void setClearHistoryViewModel(ClearHistoryViewModel vm) {
+//        this.clearHistoryViewModel = vm;
+//        vm.addPropertyChangeListener(evt -> JOptionPane.showMessageDialog(this, vm.getMessage()));
+//    }
 }
