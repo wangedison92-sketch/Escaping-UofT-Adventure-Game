@@ -43,7 +43,6 @@ import use_case.card_return_to_home.CardReturnInputBoundary;
 import use_case.card_return_to_home.CardReturnInteractor;
 import use_case.card_return_to_home.CardReturnOutputBoundary;
 import use_case.clear_history.ClearHistoryInputBoundary;
-import interface_adapter.clear_history.ClearHistoryViewModel;
 import use_case.clear_history.ClearHistoryInteractor;
 import use_case.clear_history.ClearHistoryOutputBoundary;
 import use_case.navigate.NavigateInputBoundary;
@@ -187,7 +186,6 @@ public class AppBuilder {
         viewProgressViewModel = new ViewProgressViewModel();
         ViewProgressOutputBoundary presenter = new ViewProgressPresenter(navigateViewModel);
         ViewProgressInputBoundary interactor = new ViewProgressInteractor(presenter);
-        // ngl i find this really dubious but fuck it i will FIGURE IT OUT
         ViewProgressController controller = new ViewProgressController(interactor);
 
         navigateView.setViewProgressController(controller);
@@ -208,7 +206,7 @@ public class AppBuilder {
         quitGameDialog = new QuitGameDialog(quitController, saveController, navigateViewModel, quitGameViewModel);
 
         // and save game
-        saveGameDialog = new SaveGameDialog(saveController, navigateViewModel);
+        saveGameDialog = new SaveGameDialog(saveController, navigateViewModel, quitGameViewModel, quitController);
 
         // and navigate view
         navigateView.setQuitGameController(quitController);
@@ -293,9 +291,6 @@ public class AppBuilder {
         cardGameView = new CardGameView(cardGameViewModel);
         triviaGameView = new TriviaGameView(triviaGameViewModel);
         winGameView = new WinGameView(winGameViewModel);
-
-        // Set VM
-//        navigateView.setClearHistoryViewModel(clearHistoryViewModel);
 
         // Register views
         addView(homeView, HomeView.VIEW_NAME);
