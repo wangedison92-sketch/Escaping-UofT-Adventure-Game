@@ -2,6 +2,7 @@ package use_case.play_card_game;
 
 import entity.*;
 import java.util.*;
+import use_case.play_card_game.utilities.SolutionGenerator;
 
 public class PlayCardGameInteractor implements PlayCardGameInputBoundary {
     private final CardGameDataAccessInterface cardGameDataAccessObject;
@@ -20,6 +21,9 @@ public class PlayCardGameInteractor implements PlayCardGameInputBoundary {
         // generate cards
         List<Card> cards = this.cardGameDataAccessObject.drawCards();
 
+        while (!SolutionGenerator.isSolvable(cards)) {
+            cards = this.cardGameDataAccessObject.drawCards();
+        }
         if (failCardDraw(cards)) return;
 
 //        System.out.println("Cards drawn. Cards: " + cards + " ; First Card: " + cards.get(0).getValue());
